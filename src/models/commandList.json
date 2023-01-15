@@ -15,6 +15,10 @@
     {
       "title": "afk",
       "description": "set up an afk status"
+    },
+    {
+      "title": "time",
+      "description": "get current time based on the argument"
     }
   ]
 }

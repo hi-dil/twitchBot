@@ -1,0 +1,24 @@
+{
+  "commands": [
+    {
+      "title": "ping",
+      "description": "ping the server"
+    },
+    {
+      "title": "pyramid",
+      "description": "make a pyramid. Take two arguments - emote name and pyramid size. If not specified, the default size would be 5. Ex. ! pyramid TenshiRocking 10"
+    },
+    {
+      "title": "hmm",
+      "description": "Search the definition of a words from urban dictionary"
+    },
+    {
+      "title": "afk",
+      "description": "set up an afk status"
+    },
+    {
+      "title": "time",
+      "description": "get current time based on the argument"
+    }
+  ]
+}

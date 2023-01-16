@@ -1,2 +1,2 @@
-const channels = ['bassnix', 'mafiadanger'];
+const channels = ['bassnixbot'];
 export default channels;

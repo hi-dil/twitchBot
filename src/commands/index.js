@@ -5,12 +5,13 @@ import setAfk from "./afk/setAfk.js";
 import CommandList from "./commandList.js";
 import Help from "./help.js";
 import Time from "./time.js";
+let cooldown = {}
 
 const commands = (channel, tags, message, client) => {
   const command = message[0].toLowerCase()
   if (command === 'ping') ping(client, channel)
-  if (command === 'pyramid') pyramid(client, channel, message)
-  if (command === 'Hmm') urban(client, channel, message)
+  if (command === 'pyramid') pyramid(client, channel, message, 30000)
+  if (command === 'hmm') urban(client, channel, message)
   if (command === 'afk') setAfk(client, channel, message, tags);
   if (command === 'commands') CommandList(client, channel)
   if (command === 'help') Help(client, channel, message)

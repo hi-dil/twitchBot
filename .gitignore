@@ -1,3 +1,4 @@
 node_modules/
 .env
 src/setting/channels.js
+src/models/cooldown.json

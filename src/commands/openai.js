@@ -13,7 +13,7 @@ const openai = async (client, channel, message, tags, cooldownDuration) => {
 
   if (tags.username !== 'bassnix') return
   if (!prompt) return client.say(channel, 'Madge please do not ask empty question')
-  if (prompt.length > 50) return client.say(channel, 'NepStare Please ask your question in 50 characters or less')
+  if (prompt.length > 100) return client.say(channel, 'NepStare Please ask your question in 100 characters or less')
 
   if (!cooldown?.[channel]?.['chatting']?.[tags.username]) {
     const configuration = new Configuration({

@@ -6,7 +6,7 @@
     },
     {
       "title": "pyramid",
-      "description": "make a pyramid. Take two arguments - emote name and pyramid size. If not specified, the default size would be 5. Ex. ! pyramid TenshiRocking 10"
+      "description": "make a pyramid. Take two arguments - emote name and pyramid size. If not specified, the default size would be 5. Ex. ! pyramid TenshiRocking 10. 30 seconds cd for each channel , chatting."
     },
     {
       "title": "hmm",
@@ -19,6 +19,10 @@
     {
       "title": "time",
       "description": "get current time based on the argument"
+    },
+    {
+      "title": "chatting",
+      "description": "ask your question to chatgpt. 10 minutes cd for each chatter."
     }
   ]
 }

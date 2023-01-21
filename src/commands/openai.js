@@ -35,7 +35,8 @@ const openai = async (client, channel, message, tags, cooldownDuration) => {
 
     if (answer) {
       client.say(channel, answer);
-      SetCooldown(cooldown, cooldownDuration, fileLocation, true, false, channel, 'chatting', tags.username)
+      const path = `${channel}.chatting.${tags.username}`
+      SetCooldown(cooldown, cooldownDuration, fileLocation, true, false, path, tags.username)
     }
 
     console.log(completion.data.choices[0].text);

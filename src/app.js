@@ -4,8 +4,11 @@ import commands from './commands/index.js'
 import CacheStatus from './commands/afk/cacheStatus.js';
 import ReadCache from './commands/afk/ReadCache.js';
 import FindAfk from './commands/afk/findAfk.js';
+import setHol from './commands/sethol.js';
 
 CacheStatus();
+setHol();
+
 const client = new tmi.Client(options);
 client.connect();
 
@@ -28,9 +31,7 @@ client.on('message', async (channel, tags, message, self) => {
     else cmd[0] = cmd[0].replace('!', '');
   }
 
-  if (cmd[0] === 'hello') {
-    client.say(channel, 'hello');
-  }
+  cmd = cmd.filter(text => text !== '')
 
   commands(channel, tags, cmd, client)
 })

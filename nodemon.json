@@ -1,6 +1,7 @@
 {
   "ignore": [
     "src/models/cacheData.json",
-    "src/models/cooldown.json"
+    "src/models/cooldown.json",
+    "src/models/holList.json"
   ]
 }

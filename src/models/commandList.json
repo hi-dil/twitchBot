@@ -1,6 +1,5 @@
 {
-  "commands": [
-    {
+  "commands": [{
       "title": "ping",
       "description": "ping the server"
     },
@@ -23,6 +22,11 @@
     {
       "title": "chatting",
       "description": "ask your question to chatgpt. 10 minutes cd for each chatter."
+    },
+    {
+      "title": "higherorlower",
+      "alias": "hol",
+      "description": "play higher or lower game. Inspired by http://www.higherlowergame.com"
     }
   ]
 }

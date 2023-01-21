@@ -17,8 +17,9 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
 
         let cooldownValue = true
         let afterCdValue = false
+        const path = `${channel}.pyramid`
 
-        SetCooldown(cooldown, cooldownDuration, fileLocation, cooldownValue, afterCdValue, channel, 'pyramid');
+        SetCooldown(cooldown, cooldownDuration, fileLocation, cooldownValue, afterCdValue, path);
       } else {
         client.say(channel, 'Sadeg exceed emote limit');
       }
@@ -26,10 +27,14 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
       const size = message[2];
       const args = message[1].concat(" ")
 
+      let cooldownValue = true
+      let afterCdValue = false
+      const path = `${channel}.pyramid`
+
       if (args.length * size <= messageLimit) {
         for (let i = 1; i <= size; i++) client.say(channel, args.repeat(i))
         for (let i = (size - 1); i > 0; i--) client.say(channel, args.repeat(i))
-        SetCooldown(cooldown, cooldownDuration, fileLocation);
+        SetCooldown(cooldown, cooldownDuration, fileLocation, cooldownValue, afterCdValue, path);
 
       } else {
         client.say(channel, `Sadeg exceed emote limit ${args.length * size}/${messageLimit}`)

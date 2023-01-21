@@ -12,7 +12,7 @@ const Help = async (client, channel, message) => {
   }
 
   commandList.commands.forEach((cmd) => {
-    if (cmd.title === command) {
+    if (cmd.title === command || command === cmd.alias) {
       client.say(channel, `${command} : ${cmd.description}`)
     }
   })

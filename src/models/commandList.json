@@ -5,7 +5,7 @@
     },
     {
       "title": "pyramid",
-      "description": "make a pyramid. Take two arguments - emote name and pyramid size. If not specified, the default size would be 5. Ex. ! pyramid TenshiRocking 10. 30 seconds cd for each channel , chatting."
+      "description": "make a pyramid. Take two arguments - emote name and pyramid size. If not specified, the default size would be 3. Max pyramid limit is 10. Ex. ! pyramid TenshiRocking 10. 30 seconds cd for each channel , chatting."
     },
     {
       "title": "hmm",
@@ -21,7 +21,7 @@
     },
     {
       "title": "chatting",
-      "description": "ask your question to chatgpt. 10 minutes cd for each chatter."
+      "description": "ask your question to chatgpt. 1 minute cd for each chatter."
     },
     {
       "title": "higherorlower",

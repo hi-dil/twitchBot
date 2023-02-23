@@ -5,6 +5,7 @@ import ReadCache from "./ReadCache.js";
 
 const setAfk = async (client, channel, message, tags) => {
   const dbConn = await db();
+  const afkStatus = message[0].toLowerCase();
 
   if (!dbConn) return
   const filteredMessage = message.filter(msg => msg != message[0])
@@ -12,7 +13,7 @@ const setAfk = async (client, channel, message, tags) => {
 
   const setAfk = new Afk({
     username: tags.username,
-    status: message[0],
+    status: afkStatus,
     message: afkMessage
   });
 
@@ -21,7 +22,8 @@ const setAfk = async (client, channel, message, tags) => {
   })
 
   if (saveToDb) {
-    client.say(channel, `${tags.username} is ${message[0]}: ${afkMessage}`)
+    if (afkStatus === 'afk') client.say(channel, `${tags.username} is ${message[0]}: ${afkMessage}`)
+    else if (afkStatus === 'gn') client.say(channel, `${tags.username} is sleeping Bedge : ${afkMessage}`)
 
     const readData = await ReadCache();
     readData.activeAfk.push(tags.username.toString());

@@ -11,11 +11,10 @@ const openai = async (client, channel, message, tags, cooldownDuration) => {
   const fileLocation = 'src/models/cooldown.json'
   let cooldown = await ReadFile(fileLocation);
 
-  if (tags.username !== 'bassnix') return
+  // if (tags.username !== 'bassnix') return
   if (!prompt) return client.say(channel, 'Madge please do not ask empty question')
-  if (prompt.length > 100) return client.say(channel, 'NepStare Please ask your question in 100 characters or less')
 
-  if (!cooldown?.[channel]?.['chatting']?.[tags.username]) {
+  if (!cooldown?.[channel]?.['chatting']?.[tags.username] || tags.username === 'bassnix') {
     const configuration = new Configuration({
       apiKey: process.env.OPEN_AI_API,
     });
@@ -29,21 +28,21 @@ const openai = async (client, channel, message, tags, cooldownDuration) => {
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
+    }).catch(err => {
+      console.log(err);
+      client.say(channel, 'kek no bot response');
     });
 
-    const answer = completion.data.choices[0].text;
+    const answer = completion?.data?.choices[0]?.text;
 
     if (answer) {
-      client.say(channel, answer);
+      client.say(channel, `@${tags.username}, ${answer}`);
       const path = `${channel}.chatting.${tags.username}`
       SetCooldown(cooldown, cooldownDuration, fileLocation, true, false, path, tags.username)
     }
-
-    console.log(completion.data.choices[0].text);
   } else {
-    client.say(channel, 'Please wait for 10 min cd')
+    client.say(channel, 'Please wait for 1 min cd')
   }
-
 }
 
 export default openai;

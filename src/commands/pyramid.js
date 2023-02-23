@@ -3,6 +3,7 @@ import SetCooldown from "../utils/setCooldown.js";
 
 const pyramid = async (client, channel, message, cooldownDuration) => {
   const messageLimit = 500;
+  const pyramidLimit = 10;
   const fileLocation = 'src/models/cooldown.json'
   let cooldown = await ReadFile(fileLocation);
 
@@ -26,6 +27,11 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
     } else {
       const size = message[2];
       const args = message[1].concat(" ")
+
+      if (size > pyramidLimit) {
+        client.say(channel, 'NepStare the max limit of pyramid size is 10')
+        return;
+      }
 
       let cooldownValue = true
       let afterCdValue = false

@@ -5,9 +5,12 @@ import CacheStatus from './commands/afk/cacheStatus.js';
 import ReadCache from './commands/afk/ReadCache.js';
 import FindAfk from './commands/afk/findAfk.js';
 import setHol from './commands/sethol.js';
+import twitch from './twitch_api.js';
+import ReadFile from './utils/ReadFile.js';
 
 CacheStatus();
 setHol();
+twitch();
 
 const client = new tmi.Client(options);
 client.connect();
@@ -15,12 +18,21 @@ client.connect();
 client.on('message', async (channel, tags, message, self) => {
   if (self) return;
 
+  // if (tags.username === 'streamelements') {
+  //   if (message === 'Candlesen') {
+  //     client.say(channel, 'Candlesen');
+  //   }
+  // }
+
   const afkList = await ReadCache();
   const findUser = afkList.activeAfk.find((user) => user === tags.username)
 
   if (findUser) {
     FindAfk(client, channel, tags);
   }
+
+  const fileLocation = 'src/models/live.json'
+  const liveList = await ReadFile(fileLocation)
 
   if (message[0] !== '!') return
   const cmdSign = "!";
@@ -33,5 +45,6 @@ client.on('message', async (channel, tags, message, self) => {
 
   cmd = cmd.filter(text => text !== '')
 
-  commands(channel, tags, cmd, client)
+
+  commands(channel, tags, cmd, client, liveList)
 })

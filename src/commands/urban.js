@@ -1,12 +1,10 @@
 import axios from 'axios';
 
 const urban = async (client, channel, message) => {
-  console.log(message);
   const filteredMessage = message.filter(msg => msg != message[0])
   const term = filteredMessage.join(" ");
 
   const url = `https://api.urbandictionary.com/v0/define?term=${term}`
-  console.log(url);
 
   const res = await axios.get(url);
   const response = res.data.list;

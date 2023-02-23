@@ -16,7 +16,9 @@ const FindAfk = async (client, channel, tags) => {
   const timePass = Math.abs(data.createdAt - currentTime)
 
   const convertedTime = FormatTime(timePass, 'millis')
-  client.say(channel, `${data.username} is back from afk: ${data.message} (${convertedTime})`)
+
+  if (data.status === 'afk') client.say(channel, `${data.username} is back from afk: ${data.message} (${convertedTime})`)
+  else if (data.status === 'gn') client.say(channel, `${data.username} is waking up GoodMorning : ${data.message} (${convertedTime})`)
 
   const remove = await Afk.findOneAndRemove({ username: tags.username }).catch(err => console.log(err))
 

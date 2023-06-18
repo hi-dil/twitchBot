@@ -1,34 +1,54 @@
 import db from "../../connection/db.js";
 import Afk from "../../models/afk.js";
-import SetCache from "./setCache.js";
-import ReadCache from "./ReadCache.js";
+import ReadRedis from "../../utils/redis/ReadRedis.js";
+import WriteRedis from "../../utils/redis/WriteRedis.js";
 
 const setAfk = async (client, channel, message, tags) => {
+  const rediskey = "afk";
   const dbConn = await db();
   const afkStatus = message[0].toLowerCase();
 
-  if (!dbConn) return
-  const filteredMessage = message.filter(msg => msg != message[0])
+  if (!dbConn) return;
+  const filteredMessage = message.filter((msg) => msg != message[0]);
   const afkMessage = filteredMessage.join(" ");
 
-  const setAfk = new Afk({
-    username: tags.username,
-    status: afkStatus,
-    message: afkMessage
-  });
+  // then check if the get the user details from afk db
+  const filter = { username: tags.username };
+  const findUser = await Afk.findOne(filter).catch((err) => console.log(err));
 
-  const saveToDb = await setAfk.save().catch((error) => {
-    console.log(error);
-  })
+  let saveToDb;
+  if (!findUser) {
+    const setAfk = new Afk({
+      username: tags.username,
+      status: afkStatus,
+      message: afkMessage,
+      afktime: new Date(),
+    });
+
+    saveToDb = await setAfk.save().catch((error) => {
+      console.log(error);
+    });
+  } else {
+    const update = {
+      status: afkStatus,
+      message: afkMessage,
+      afktime: new Date(),
+    };
+    saveToDb = await Afk.findOneAndUpdate(filter, update).catch((err) =>
+      console.log(err)
+    );
+  }
 
   if (saveToDb) {
-    if (afkStatus === 'afk') client.say(channel, `${tags.username} is ${message[0]}: ${afkMessage}`)
-    else if (afkStatus === 'gn') client.say(channel, `${tags.username} is sleeping Bedge : ${afkMessage}`)
+    if (afkStatus === "afk")
+      client.say(channel, `${tags.username} is ${message[0]}: ${afkMessage}`);
+    else if (afkStatus === "gn")
+      client.say(channel, `${tags.username} is sleeping Bedge : ${afkMessage}`);
 
-    const readData = await ReadCache();
+    const readData = await ReadRedis(rediskey);
     readData.activeAfk.push(tags.username.toString());
-    SetCache(readData)
+    WriteRedis(readData, rediskey);
   }
-}
+};
 
 export default setAfk;

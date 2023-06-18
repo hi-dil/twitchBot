@@ -1,29 +1,36 @@
-import set from 'lodash.set';
-import WriteFile from "./WriteFile.js"
+import set from "lodash.set";
+import WriteFile from "./WriteFile.js";
+import WriteRedis from "./redis/WriteRedis.js";
 
-const SetCooldown = (cooldown, cooldownDuration, fileLocation, initialValue, afterCdValue, path, username = "") => {
-  let pyramid = true
+const SetCooldown = (
+  cooldown,
+  cooldownDuration,
+  fileLocation,
+  initialValue,
+  afterCdValue,
+  path,
+  username = ""
+) => {
+  let pyramid = true;
+  const rediskey = "cooldown";
+
   if (username !== "") {
-    // const path = `${channel}.${commands}.${username}`
-    const update = set(cooldown, path, initialValue)
+    const update = set(cooldown, path, initialValue);
 
-    WriteFile(update, fileLocation)
-
-    setTimeout(() => {
-
-      const updateCD = set(cooldown, path, afterCdValue)
-      WriteFile(updateCD, fileLocation)
-    }, cooldownDuration);
-  }
-  else {
-    // const path = `${channel}.${commands}`
-    const update = set(cooldown, path, initialValue)
-    WriteFile(update, fileLocation)
+    WriteRedis(update, rediskey);
 
     setTimeout(() => {
-      const updateCD = set(cooldown, path, afterCdValue)
-      WriteFile(updateCD, fileLocation)
+      const updateCD = set(cooldown, path, afterCdValue);
+      WriteRedis(updateCD, rediskey);
+    }, cooldownDuration);
+  } else {
+    const update = set(cooldown, path, initialValue);
+    WriteRedis(update, rediskey);
+
+    setTimeout(() => {
+      const updateCD = set(cooldown, path, afterCdValue);
+      WriteRedis(updateCD, rediskey);
     }, cooldownDuration);
   }
-}
+};
 export default SetCooldown;

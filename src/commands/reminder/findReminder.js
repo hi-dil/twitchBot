@@ -19,7 +19,7 @@ const FindReminder = async (client, channel, tags) => {
 
   let reminderMessage = "";
   datum.forEach((data, index) => {
-    if (index === datum.length) {
+    if (index === datum.length - 1) {
       reminderMessage = reminderMessage.concat(
         `${data.username}: ${data.message}`
       );

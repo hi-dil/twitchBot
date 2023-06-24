@@ -11,6 +11,8 @@ import hol from "./higherorlower/higherorlower.js";
 import leaderboard from "./leaderboard/leaderboard.js";
 import tuck from "./tuck/tuck.js";
 import fill from "./fill/fill.js";
+import pick from "./pick/pick.js";
+import SetReminder from "./reminder/setReminder.js";
 
 const commands = async (channel, tags, message, client, liveList) => {
   const command = message[0].toLowerCase();
@@ -29,6 +31,9 @@ const commands = async (channel, tags, message, client, liveList) => {
     }
   }
 
+  // *note = the message will be stored inside an array containing all the work that
+  // provided from the command, including the the command name
+
   if (command === "ping") ping(client, channel);
   if (command === "hmm") urban(client, channel, message);
 
@@ -36,6 +41,8 @@ const commands = async (channel, tags, message, client, liveList) => {
     setAfk(client, channel, message, tags);
   if (command === "rafk" || command === "resumeafk")
     setRafk(client, channel, message, tags);
+
+  if (command === "remind") SetReminder(client, channel, message, tags);
 
   if (command === "commands") CommandList(client, channel);
   if (command === "help") Help(client, channel, message);
@@ -48,6 +55,7 @@ const commands = async (channel, tags, message, client, liveList) => {
   if (command === "top") leaderboard(client, channel, message);
   if (command === "tuck") tuck(client, channel, message);
   if (command === "fill") fill(client, channel, message);
+  if (command === "pick") pick(client, channel, message);
 };
 
 export default commands;

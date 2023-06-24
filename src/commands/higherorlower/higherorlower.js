@@ -5,10 +5,11 @@ import setHolTimeout from "../../utils/setHolTimeout.js";
 import setLeaderboard from "../leaderboard/setLeaderboard.js";
 
 const hol = async (client, channel, message, tags) => {
-  const rediskey = "cooldown";
+  const rediskey = "holquestions";
+  const sessionRedisKey = "cooldown";
 
   const fileLocation = "src/models/cooldown.json";
-  const data = await ReadRedis(rediskey);
+  const data = await ReadRedis(sessionRedisKey);
   const holDataLocation = "src/models/holList.json";
   const holData = await ReadRedis(rediskey);
 
@@ -87,7 +88,7 @@ const hol = async (client, channel, message, tags) => {
 
       const path = `${channel}.hol.start`;
       const updateSession = set(data, path, false);
-      WriteFile(updateSession, fileLocation);
+      WriteRedis(updateSession, sessionRedisKey);
 
       setLeaderboard(channel, tags.username, score, "hol");
     }
@@ -123,6 +124,7 @@ const generateQuestion = (
   score
 ) => {
   const searchVolume = abbreviateNumber(firstQ.searchVolume);
+  const sessionRedisKey = "cooldown";
 
   client.say(
     channel,
@@ -142,7 +144,7 @@ const generateQuestion = (
 
   const updateSession = set(data, path, updateData);
 
-  WriteFile(updateSession, fileLocation);
+  WriteRedis(updateSession, sessionRedisKey);
 };
 
 export default hol;

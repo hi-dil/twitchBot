@@ -1,5 +1,5 @@
 import db from "../../connection/db.js";
-import Leaderboard from "../../models/leaderboard.js";
+import Leaderboard from "../../models/dbmodels/leaderboard.js";
 
 const leaderboard = async (client, channel, message) => {
   const dbConn = await db();

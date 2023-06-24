@@ -1,5 +1,5 @@
 import db from "../../connection/db.js";
-import Afk from "../../models/afk.js";
+import Afk from "../../models/dbmodels/afk.js";
 import ReadRedis from "../../utils/redis/ReadRedis.js";
 import WriteRedis from "../../utils/redis/WriteRedis.js";
 

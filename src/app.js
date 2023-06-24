@@ -1,12 +1,12 @@
 import tmi from "tmi.js";
 import options from "./setting/options.js";
 import commands from "./commands/index.js";
-import CacheStatus from "./commands/afk/cacheStatus.js";
 import ReadRedis from "./utils/redis/ReadRedis.js";
 import FindAfk from "./commands/afk/findAfk.js";
 import setHol from "./commands/higherorlower/sethol.js";
 import twitch from "./twitch_api.js";
 import ReadFile from "./utils/ReadFile.js";
+import FindReminder from "./commands/reminder/findReminder.js";
 
 setHol();
 twitch();
@@ -17,13 +17,21 @@ client.connect();
 client.on("message", async (channel, tags, message, self) => {
   if (self) return;
 
+  // find afk
   const afkrediskey = "afk";
   const afkList = await ReadRedis(afkrediskey);
   const findUser = afkList.activeAfk.find((user) => user === tags.username);
 
-  if (findUser) {
-    FindAfk(client, channel, tags);
-  }
+  if (findUser) FindAfk(client, channel, tags);
+
+  //find reminder
+  const reminderRedisKey = "activeReminder";
+  const activeReminder = await ReadRedis(reminderRedisKey);
+  const findActiveReminder = activeReminder.find(
+    (user) => user === tags.username.toLowerCase()
+  );
+
+  if (findActiveReminder) FindReminder(client, channel, tags);
 
   const fileLocation = "src/models/live.json";
   const liveList = await ReadFile(fileLocation);

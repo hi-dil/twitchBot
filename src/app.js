@@ -7,6 +7,8 @@ import setHol from "./commands/higherorlower/sethol.js";
 import twitch from "./twitch_api.js";
 import ReadFile from "./utils/ReadFile.js";
 import FindReminder from "./commands/reminder/findReminder.js";
+import IsValidUrl from "./utils/utils.js";
+import SaveLink from "./commands/link/saveLink.js";
 
 setHol();
 twitch();
@@ -30,6 +32,11 @@ client.on("message", async (channel, tags, message, self) => {
   const findActiveReminder = activeReminder.find(
     (user) => user === tags.username.toLowerCase()
   );
+
+  //check if the message contains link
+  if (IsValidUrl(message)) {
+    SaveLink(client, channel, message, tags);
+  }
 
   if (findActiveReminder) FindReminder(client, channel, tags);
 

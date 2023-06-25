@@ -13,6 +13,7 @@ import tuck from "./tuck/tuck.js";
 import fill from "./fill/fill.js";
 import pick from "./pick/pick.js";
 import SetReminder from "./reminder/setReminder.js";
+import GetLink from "./link/getLink.js";
 
 const commands = async (channel, tags, message, client, liveList) => {
   const command = message[0].toLowerCase();
@@ -56,6 +57,7 @@ const commands = async (channel, tags, message, client, liveList) => {
   if (command === "tuck") tuck(client, channel, message);
   if (command === "fill") fill(client, channel, message);
   if (command === "pick") pick(client, channel, message);
+  if (command === "link") GetLink(client, channel, message, tags);
 };
 
 export default commands;

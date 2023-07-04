@@ -1,6 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
 import SetCooldown from "../../utils/setCooldown.js";
 import ReadRedis from "../../utils/redis/ReadRedis.js";
+import FormatTime from "../../utils/formatTime.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -17,20 +18,17 @@ const openai = async (client, channel, message, tags, cooldownDuration) => {
   if (!prompt)
     return client.say(channel, "Madge please do not ask empty question");
 
-  if (
-    !cooldown?.[channel]?.["chatting"]?.[tags.username] ||
-    tags.username === "bassnix"
-  ) {
+  if (!cooldown?.[channel]?.["chatting"]?.[tags.username]) {
     const configuration = new Configuration({
       apiKey: process.env.OPEN_AI_API,
     });
     const openai = new OpenAIApi(configuration);
 
     const completion = await openai
-      .createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        temperature: 0.7,
+      .createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 1.3,
         max_tokens: 200,
         top_p: 1,
         frequency_penalty: 0,
@@ -41,7 +39,7 @@ const openai = async (client, channel, message, tags, cooldownDuration) => {
         client.say(channel, "kek no bot response");
       });
 
-    const answer = completion?.data?.choices[0]?.text;
+    const answer = completion?.data?.choices[0]?.message?.content;
 
     if (answer) {
       client.say(channel, `@${tags.username}, ${answer}`);
@@ -57,7 +55,10 @@ const openai = async (client, channel, message, tags, cooldownDuration) => {
       );
     }
   } else {
-    client.say(channel, "Please wait for 1 min cd");
+    client.say(
+      channel,
+      `Please wait for ${FormatTime(cooldownDuration)} cooldown`
+    );
   }
 };
 

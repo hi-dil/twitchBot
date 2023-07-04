@@ -18,10 +18,12 @@
     "lodash.set": "^4.3.2",
     "moment-timezone": "^0.5.40",
     "mongoose": "^6.8.3",
+    "node-schedule": "^2.1.1",
     "npm": "^9.3.1",
-    "openai": "^3.1.0",
+    "openai": "^3.3.0",
     "redis": "^4.6.7",
     "rxjs": "^7.8.0",
-    "tmi.js": "^1.8.5"
+    "tmi.js": "^1.8.5",
+    "winston": "^3.9.0"
   }
 }

@@ -9,6 +9,8 @@ import ReadFile from "./utils/ReadFile.js";
 import FindReminder from "./commands/reminder/findReminder.js";
 import IsValidUrl from "./utils/utils.js";
 import SaveLink from "./commands/link/saveLink.js";
+import ScrambleAnimeAnswer from "./commands/scramble-anime/scrambleAnimeAnswer.js";
+import logger from "./utils/logger.js";
 
 setHol();
 twitch();
@@ -18,6 +20,7 @@ client.connect();
 
 client.on("message", async (channel, tags, message, self) => {
   if (self) return;
+  logger.info(`[${channel}] <${tags.username}>: ${message}`);
 
   // find afk
   const afkrediskey = "afk";
@@ -32,6 +35,14 @@ client.on("message", async (channel, tags, message, self) => {
   const findActiveReminder = activeReminder.find(
     (user) => user === tags.username.toLowerCase()
   );
+
+  //check for scramble anime session
+  const cooldownRedisKey = "cooldown";
+  const cooldownData = await ReadRedis(cooldownRedisKey);
+
+  if (cooldownData?.[channel]?.["scrambleanime"]?.["start"]) {
+    ScrambleAnimeAnswer(client, channel, message, tags);
+  }
 
   //check if the message contains link
   if (IsValidUrl(message)) {

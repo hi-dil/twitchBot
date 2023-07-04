@@ -1,16 +1,14 @@
 import set from "lodash.set";
 import WriteRedis from "../../utils/redis/WriteRedis.js";
 import ReadRedis from "../../utils/redis/ReadRedis.js";
-import setHolTimeout from "../../utils/setHolTimeout.js";
+import setGameTimeout from "../../utils/setGameTimeout.js";
 import setLeaderboard from "../leaderboard/setLeaderboard.js";
 
 const hol = async (client, channel, message, tags) => {
   const rediskey = "holquestions";
   const sessionRedisKey = "cooldown";
 
-  const fileLocation = "src/models/cooldown.json";
   const data = await ReadRedis(sessionRedisKey);
-  const holDataLocation = "src/models/holList.json";
   const holData = await ReadRedis(rediskey);
 
   if (!data?.[channel]?.["hol"]?.["start"]) {
@@ -20,18 +18,9 @@ const hol = async (client, channel, message, tags) => {
     const firstQ = holData[random];
     const secondQ = holData[random2];
 
-    generateQuestion(
-      firstQ,
-      secondQ,
-      data,
-      fileLocation,
-      client,
-      channel,
-      tags,
-      0
-    );
+    generateQuestion(firstQ, secondQ, data, client, channel, tags, 0);
 
-    setHolTimeout("start", tags.username, client, channel);
+    setGameTimeout("hol", "start", tags.username, client, channel);
   } else {
     const ansData = data?.[channel]?.["hol"];
     if (tags.username !== ansData.user)
@@ -58,29 +47,20 @@ const hol = async (client, channel, message, tags) => {
         channel,
         `Correct. ${ansData?.question.keyword} have ${previousSearchVolume} searches/month`
       );
-      setHolTimeout("refresh");
+      setGameTimeout("hol", "refresh");
 
       const random = Math.floor(Math.random() * holData.length);
       const firstQ = ansData?.question;
       const secondQ = holData[random];
 
-      generateQuestion(
-        firstQ,
-        secondQ,
-        data,
-        fileLocation,
-        client,
-        channel,
-        tags,
-        score
-      );
+      generateQuestion(firstQ, secondQ, data, client, channel, tags, score);
     } else {
       const searchVolume = abbreviateNumber(ansData?.question.searchVolume);
       client.say(
         channel,
         `Wrong. The answer is ${actualAns}. ${ansData?.question?.keyword} has ${searchVolume} searches/month`
       );
-      setHolTimeout("stop", tags.username, client, channel);
+      setGameTimeout("hol", "stop", tags.username, client, channel);
 
       const score = data?.[channel]?.["hol"]?.["score"];
 
@@ -117,7 +97,6 @@ const generateQuestion = (
   firstQ,
   secondQ,
   data,
-  fileLocation,
   client,
   channel,
   tags,

@@ -14,6 +14,7 @@ import fill from "./fill/fill.js";
 import pick from "./pick/pick.js";
 import SetReminder from "./reminder/setReminder.js";
 import GetLink from "./link/getLink.js";
+import ScrambleAnime from "./scramble-anime/scrambleAnime.js";
 
 const commands = async (channel, tags, message, client, liveList) => {
   const command = message[0].toLowerCase();
@@ -48,7 +49,7 @@ const commands = async (channel, tags, message, client, liveList) => {
   if (command === "commands") CommandList(client, channel);
   if (command === "help") Help(client, channel, message);
   // if (command === 'time') Time(client, channel, message)
-  if (command === "chatting") openai(client, channel, message, tags, 60000);
+  if (command === "chatting") openai(client, channel, message, tags, 10000);
 
   if (command === "hol" || command === "higherorlower")
     hol(client, channel, message, tags);
@@ -58,6 +59,8 @@ const commands = async (channel, tags, message, client, liveList) => {
   if (command === "fill") fill(client, channel, message);
   if (command === "pick") pick(client, channel, message);
   if (command === "link") GetLink(client, channel, message, tags);
+  if (command === "scrambleanime")
+    ScrambleAnime(client, channel, message, tags);
 };
 
 export default commands;

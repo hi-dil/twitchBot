@@ -6,7 +6,7 @@ import WriteRedis from "../../utils/redis/WriteRedis.js";
 const SetReminder = async (client, channel, message, tags) => {
   const rediskey = "activeReminder";
   const dbConn = await db();
-  const targetuser = message[1].toLowerCase(0);
+  const targetuser = message[1].toLowerCase(0).replace("@", "");
 
   if (!dbConn) return;
   const filteredMessage = message.filter(

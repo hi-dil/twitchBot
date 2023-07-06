@@ -5,7 +5,6 @@ import WriteRedis from "./redis/WriteRedis.js";
 const SetCooldown = (
   cooldown,
   cooldownDuration,
-  fileLocation,
   initialValue,
   afterCdValue,
   path,

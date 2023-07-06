@@ -6,7 +6,6 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
 
   const messageLimit = 500;
   const pyramidLimit = 10;
-  const fileLocation = "src/models/cooldown.json";
   let cooldown = await ReadRedis(rediskey);
 
   if (!cooldown?.[channel]?.["pyramid"]) {
@@ -25,7 +24,6 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
         SetCooldown(
           cooldown,
           cooldownDuration,
-          fileLocation,
           cooldownValue,
           afterCdValue,
           path

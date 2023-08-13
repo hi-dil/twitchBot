@@ -15,6 +15,7 @@ import pick from "./pick/pick.js";
 import SetReminder from "./reminder/setReminder.js";
 import GetLink from "./link/getLink.js";
 import ScrambleAnime from "./scramble-anime/scrambleAnime.js";
+import pyramidWhitelist from "./pyramid/whitelist.js";
 
 const commands = async (channel, tags, message, client, liveList) => {
   const command = message[0].toLowerCase();
@@ -24,7 +25,10 @@ const commands = async (channel, tags, message, client, liveList) => {
     isLive.push(ch.user_login);
   });
 
-  if (!isLive.includes(channel.replace("#", ""))) {
+  if (
+    !isLive.includes(channel.replace("#", "")) ||
+    pyramidWhitelist.includes(channel.replace("#", ""))
+  ) {
     if (command === "pyramid" || command === "p")
       pyramid(client, channel, message, 30000);
   } else {

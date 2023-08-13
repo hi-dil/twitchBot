@@ -6,6 +6,7 @@ import schedule from "node-schedule";
 const gameDuration = 60;
 const warningDuration = 10;
 
+// store the game id and its state
 const gameJobs = {};
 const gameReminderJob = {};
 
@@ -74,7 +75,6 @@ const startTimer = async (client, channel, answer, gameID, game) => {
   );
 
   gameJobs[gameID] = true;
-
   const remainingTimer = gameDuration - warningDuration;
   schedule.scheduleJob(
     reminderID,
@@ -97,7 +97,6 @@ const startTimer = async (client, channel, answer, gameID, game) => {
 };
 
 const stopTimer = (game, gameID) => {
-  console.log(`Closing ${game} session. Game ID ${gameID}`);
   const reminderID = `${gameID}.warning`;
 
   if (gameJobs[gameID]) {
@@ -109,8 +108,6 @@ const stopTimer = (game, gameID) => {
     schedule.cancelJob(reminderID);
     gameReminderJob[reminderID] = undefined;
   }
-
-  console.log(schedule.scheduledJobs);
 };
 
 export default setGameTimeout;

@@ -80,9 +80,15 @@ const generateQuestion = async (data, animeCount, client, channel, tags) => {
   WriteRedis(animeCount.toString(), animeCountRedisKey);
 
   // get the question
-  var titles = questionres.data.data[getRandomNumber].titles;
-  var questionArray = titles.find((item) => item.type === "Default");
-  var question = questionArray.title;
+  var questionobject = questionres.data.data[getRandomNumber];
+
+  // get english title if any
+  var question = "";
+  if (questionobject.title_english != null) {
+    question = questionobject.title_english;
+  } else {
+    question = questionobject.title;
+  }
 
   // do the scramble
   var questionsb = "";

@@ -23,6 +23,7 @@ const setAfk = async (client, channel, message, tags) => {
       status: afkStatus,
       message: afkMessage,
       afktime: new Date(),
+      activetime: new Date(),
     });
 
     saveToDb = await setAfk.save().catch((error) => {
@@ -40,10 +41,14 @@ const setAfk = async (client, channel, message, tags) => {
   }
 
   if (saveToDb) {
-    if (afkStatus === "afk")
+    if (afkStatus === "afk" && afkMessage)
       client.say(channel, `${tags.username} is ${message[0]}: ${afkMessage}`);
-    else if (afkStatus === "gn")
+    else if (afkStatus === "gn" && afkMessage)
       client.say(channel, `${tags.username} is sleeping Bedge : ${afkMessage}`);
+    else if (afkStatus === "afk" && !afkMessage)
+      client.say(channel, `${tags.username} is ${message[0]}`);
+    else if (afkStatus === "gn" && !afkMessage)
+      client.say(channel, `${tags.username} is sleeping Bedge`);
 
     const readData = await ReadRedis(rediskey);
     readData.activeAfk.push(tags.username.toString());

@@ -7,6 +7,7 @@ const afkSchema = new Schema(
     status: String,
     message: String,
     afktime: Date,
+    activetime: Date,
   },
   { timestamps: true }
 );

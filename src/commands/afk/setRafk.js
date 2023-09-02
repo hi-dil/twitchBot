@@ -3,7 +3,7 @@ import Afk from "../../models/dbmodels/afk.js";
 import ReadRedis from "../../utils/redis/ReadRedis.js";
 import WriteRedis from "../../utils/redis/WriteRedis.js";
 
-const setAfk = async (client, channel, message, tags) => {
+const setRafk = async (client, channel, message, tags) => {
   const rediskey = "afk";
 
   const dbConn = await db();
@@ -23,9 +23,8 @@ const setAfk = async (client, channel, message, tags) => {
 
   // check if the time pass is more that 5 minutes or not
   const currentTime = new Date();
-  const timePass = Math.abs(data.afktime - currentTime);
+  const timePass = Math.abs(data.activetime - currentTime);
 
-  let saveToDb;
   if (timePass <= 300000) {
     client.say(channel, "Your afk has been resumed");
 
@@ -40,4 +39,4 @@ const setAfk = async (client, channel, message, tags) => {
   }
 };
 
-export default setAfk;
+export default setRafk;

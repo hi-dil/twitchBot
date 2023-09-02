@@ -16,7 +16,7 @@ const FindAfk = async (client, channel, tags) => {
   if (!data) return;
 
   const currentTime = new Date();
-  const timePass = Math.abs(data.updatedAt - currentTime);
+  const timePass = Math.abs(data.afktime - currentTime);
 
   const convertedTime = FormatTime(timePass, "millis");
 
@@ -30,6 +30,14 @@ const FindAfk = async (client, channel, tags) => {
       channel,
       `${data.username} is waking up GoodMorning : ${data.message} (${convertedTime})`
     );
+
+  // update the active time in db
+  const filter = { username: tags.username };
+  const update = {
+    activetime: new Date(),
+  };
+
+  await Afk.findOneAndUpdate(filter, update).catch((err) => console.log(err));
 
   // remove the user from afk list in cache
   const afkList = await ReadRedis(rediskey);

@@ -11,8 +11,11 @@ import IsValidUrl from "./utils/utils.js";
 import SaveLink from "./commands/link/saveLink.js";
 import ScrambleAnimeAnswer from "./commands/scramble-anime/scrambleAnimeAnswer.js";
 import logger from "./utils/logger.js";
+import { redisinit } from "./utils/redisinit.js";
 
 setHol();
+redisinit();
+
 // twitch();
 
 const client = new tmi.Client(options);
@@ -33,7 +36,7 @@ client.on("message", async (channel, tags, message, self) => {
   const reminderRedisKey = "activeReminder";
   const activeReminder = await ReadRedis(reminderRedisKey);
   const findActiveReminder = activeReminder.find(
-    (user) => user === tags.username.toLowerCase()
+    (user) => user === tags.username.toLowerCase(),
   );
 
   //check for scramble anime session

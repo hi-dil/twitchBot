@@ -5,7 +5,8 @@ const ReadRedis = async (key) => {
 
   if (!redis) return;
   const readData = await redis.get(key);
-  return JSON.parse(readData);
+  const data = JSON.parse(readData);
+  return data;
 };
 
 export default ReadRedis;

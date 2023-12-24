@@ -1,26 +1,45 @@
+import moment from "moment";
+
 const FormatTime = (uptime, type) => {
-  let time = ""
-  if (type === 'seconds') {
-    var sec_num = parseInt(uptime, 10); // don't forget the second param
-    var hours = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+  console.log(`${uptime} ${type}`);
+  let time = "";
+  if (type === "seconds") {
+    const duration = moment.duration(uptime, 'seconds');
 
-    if (hours !== 0) time = time.concat(`${hours} hours `)
-    if (minutes !== 0) time = time.concat(`${minutes} minutes `)
-    if (seconds !== 0) time = time.concat(`${seconds} seconds`)
-  } else {
-    var seconds = Math.floor((uptime / 1000) % 60)
-    var minutes = Math.floor((uptime / (1000 * 60)) % 60)
-    var hours = Math.floor((uptime / (1000 * 60 * 60)) % 24);
+    const components = [];
 
-    if (hours !== 0) time = time.concat(`${hours} hours `)
-    if (minutes !== 0) time = time.concat(`${minutes} minutes `)
-    if (seconds !== 0) time = time.concat(`${seconds} seconds`)
+    if (duration.years() !== 0) components.push(`${duration.years()} years`);
+    if (duration.months() !== 0) components.push(`${duration.months()} months`);
+    if (duration.days() !== 0) components.push(`${duration.days()} days`);
+    if (duration.hours() !== 0) components.push(`${duration.hours()} hours`);
+    if (duration.minutes() !== 0) {
+      components.push(`${duration.minutes()} minutes`);
+    }
+    if (duration.seconds() !== 0) {
+      components.push(`${duration.seconds()} seconds`);
+    }
 
+    time = components.join(" ");
+  } else if (type === "millis") {
+    const duration = moment.duration(uptime);
+
+    const components = [];
+
+    if (duration.years() !== 0) components.push(`${duration.years()} years`);
+    if (duration.months() !== 0) components.push(`${duration.months()} months`);
+    if (duration.days() !== 0) components.push(`${duration.days()} days`);
+    if (duration.hours() !== 0) components.push(`${duration.hours()} hours`);
+    if (duration.minutes() !== 0) {
+      components.push(`${duration.minutes()} minutes`);
+    }
+    if (duration.seconds() !== 0) {
+      components.push(`${duration.seconds()} seconds`);
+    }
+
+    time =  components.join(" ");
   }
 
   return time;
-}
+};
 
-export default FormatTime
+export default FormatTime;

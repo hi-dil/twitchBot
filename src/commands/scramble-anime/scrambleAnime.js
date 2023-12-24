@@ -73,6 +73,7 @@ const generateQuestion = async (data, animeCount, client, channel, tags) => {
   const getRandomNumber = Math.floor(Math.random() * 25) + 1;
 
   const url = `https://api.jikan.moe/v4/anime?min_score=8&limit=25&page=${getRandomPage}`;
+  console.log(url)
   const questionres = await axios.get(url);
 
   // get the current anime count and update it

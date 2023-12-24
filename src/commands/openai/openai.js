@@ -89,7 +89,6 @@ const generategpt = async (
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 1.3,
-      max_tokens: 200,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,

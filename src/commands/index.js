@@ -17,28 +17,30 @@ import GetLink from "./link/getLink.js";
 import ScrambleAnime from "./scramble-anime/scrambleAnime.js";
 import pyramidWhitelist from "./pyramid/whitelist.js";
 
-const commands = async (channel, tags, message, client, liveList) => {
+const commands = async (channel, tags, message, client) => {
   const command = message[0].toLowerCase();
 
-  const isLive = [];
-  liveList.forEach((ch) => {
-    isLive.push(ch.user_login);
-  });
+  // const isLive = [];
+  // liveList.forEach((ch) => {
+  //   isLive.push(ch.user_login);
+  // });
 
-  if (
-    !isLive.includes(channel.replace("#", "")) ||
-    pyramidWhitelist.includes(channel.replace("#", ""))
-  ) {
-    if (command === "pyramid" || command === "p")
-      pyramid(client, channel, message, 30000);
-  } else {
-    if (command === "pyramid") {
-      client.say(channel, `@${tags.username} no ${command} in online chat`);
-    }
-  }
+  // if (
+  //   !isLive.includes(channel.replace("#", "")) ||
+  //   pyramidWhitelist.includes(channel.replace("#", ""))
+  // ) {
+  //   if (command === "pyramid" || command === "p")
+  //     pyramid(client, channel, message, 30000);
+  // } else {
+  //   if (command === "pyramid") {
+  //     client.say(channel, `@${tags.username} no ${command} in online chat`);
+  //   }
+  // }
 
   // *note = the message will be stored inside an array containing all the work that
   // provided from the command, including the the command name
+    if (command === "pyramid" || command === "p")
+      pyramid(client, channel, message, 30000);
 
   if (command === "ping") ping(client, channel);
   if (command === "hmm") urban(client, channel, message);

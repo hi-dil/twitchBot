@@ -1,2 +1,2 @@
-const pyramidWhitelist = ["vanillaismee"];
+const pyramidWhitelist = ["vanillaismee", "rhythmkoh"];
 export default pyramidWhitelist;

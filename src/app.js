@@ -13,7 +13,7 @@ import ScrambleAnimeAnswer from "./commands/scramble-anime/scrambleAnimeAnswer.j
 import logger from "./utils/logger.js";
 
 setHol();
-twitch();
+// twitch();
 
 const client = new tmi.Client(options);
 client.connect();
@@ -51,8 +51,8 @@ client.on("message", async (channel, tags, message, self) => {
 
   if (findActiveReminder) FindReminder(client, channel, tags);
 
-  const fileLocation = "src/models/live.json";
-  const liveList = await ReadFile(fileLocation);
+  // const fileLocation = "src/models/live.json";
+  // const liveList = await ReadFile(fileLocation);
 
   if (message[0] !== "!") return;
   const cmdSign = "!";
@@ -65,5 +65,5 @@ client.on("message", async (channel, tags, message, self) => {
 
   cmd = cmd.filter((text) => text !== "");
 
-  commands(channel, tags, cmd, client, liveList);
+  commands(channel, tags, cmd, client);
 });

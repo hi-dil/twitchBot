@@ -28,7 +28,7 @@ const FindAfk = async (client, channel, tags) => {
   else if (data.status === "gn")
     client.say(
       channel,
-      `${data.username} is waking up GoodMorning : ${data.message} (${convertedTime})`
+      `${data.username} is sleeping for ${convertedTime} GoodMorning . o O ( ${data.message} )`
     );
 
   // update the active time in db

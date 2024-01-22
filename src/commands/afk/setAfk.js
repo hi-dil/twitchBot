@@ -44,7 +44,7 @@ const setAfk = async (client, channel, message, tags) => {
     if (afkStatus === "afk" && afkMessage)
       client.say(channel, `${tags.username} is ${message[0]}: ${afkMessage}`);
     else if (afkStatus === "gn" && afkMessage)
-      client.say(channel, `${tags.username} is sleeping Bedge : ${afkMessage}`);
+      client.say(channel, `${tags.username} : GoodNight . o O ( ${afkMessage} )`);
     else if (afkStatus === "afk" && !afkMessage)
       client.say(channel, `${tags.username} is ${message[0]}`);
     else if (afkStatus === "gn" && !afkMessage)

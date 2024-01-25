@@ -95,7 +95,7 @@ const generategpt = async (
     })
     .catch((err) => {
       console.log(err);
-      client.say(channel, "kek no bot response");
+      client.say(channel, "bassni2Pout no bot response");
     });
 
   const answer = completion?.data?.choices[0]?.message?.content;

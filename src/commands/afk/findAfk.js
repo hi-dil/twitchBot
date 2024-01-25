@@ -20,16 +20,28 @@ const FindAfk = async (client, channel, tags) => {
 
   const convertedTime = FormatTime(timePass, "millis");
 
-  if (data.status === "afk")
+  if (data.status === "afk" && data.message)
     client.say(
       channel,
       `${data.username} is back from afk: ${data.message} (${convertedTime})`
     );
-  else if (data.status === "gn")
+  else if (data.status === "gn" && data.message)
     client.say(
       channel,
-      `${data.username} is sleeping for ${convertedTime} GoodMorning . o O ( ${data.message} )`
+      `${data.username} is sleeping for ${convertedTime} bassni2GoodMorning . o 0 ( ${data.message} )`
     );
+  else if (data.status === "afk" && !data.message){
+    client.say(
+      channel,
+      `${data.username} is back from afk for ${convertedTime}`
+    );
+  }
+  else if (data.status === "gn" && !data.message) {
+    client.say(
+      channel,
+      `${data.username} is sleeping for ${convertedTime} bassni2GoodMorning`
+    );
+  }
 
   // update the active time in db
   const filter = { username: tags.username };

@@ -12,6 +12,9 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
     if (message.length === 2) {
       const limit = 3;
       const args = message[1].concat(" ");
+      if (args[1] === "!" || args[1] === "/") {
+        return;
+      }
 
       if (args.length * limit <= messageLimit) {
         for (let i = 1; i <= limit; i++) client.say(channel, args.repeat(i));
@@ -26,7 +29,7 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
           cooldownDuration,
           cooldownValue,
           afterCdValue,
-          path
+          path,
         );
       } else {
         client.say(channel, "Sadeg exceed emote limit");
@@ -34,6 +37,10 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
     } else {
       const size = message[2];
       const args = message[1].concat(" ");
+      
+      if (args[1] === "!" || args[1] === "/") {
+        return;
+      }
 
       if (size > pyramidLimit) {
         client.say(channel, "NepStare the max limit of pyramid size is 10");
@@ -53,12 +60,12 @@ const pyramid = async (client, channel, message, cooldownDuration) => {
           fileLocation,
           cooldownValue,
           afterCdValue,
-          path
+          path,
         );
       } else {
         client.say(
           channel,
-          `Sadeg exceed emote limit ${args.length * size}/${messageLimit}`
+          `Sadeg exceed emote limit ${args.length * size}/${messageLimit}`,
         );
       }
     }

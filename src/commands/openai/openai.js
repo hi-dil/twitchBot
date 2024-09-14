@@ -86,10 +86,10 @@ const generategpt = async (
 
   const completion = await openai
     .createChatCompletion({
-      model: "gpt-4-turbo-preview",
+      model: "gpt-4o",
       messages: [{ role: "user", content: prompt }],
       temperature: 1.3,
-      max_tokens: 350,
+      max_tokens: 3000,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,

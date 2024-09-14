@@ -4,6 +4,10 @@ const fill = (client, channel, message) => {
   let concatWord = '';
   let length = 0;
 
+  if (prompt[0] === "!" || prompt[0] === "/") {
+    return;
+  }
+
   const builedString = buildFill(length, concatWord, prompt);
 
   client.say(channel, builedString);

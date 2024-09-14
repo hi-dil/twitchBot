@@ -60,6 +60,11 @@ client.on("message", async (channel, tags, message, self) => {
   if (message[0] !== "!") return;
   const cmdSign = "!";
   let cmd = message.split(" ");
+  if (cmd[1].charAt(0) === "!" || cmd[1].charAt(0) === "/") return;
+
+  if (channel.includes("narlaxs99") && tags.username === "rrykalt") {
+    return;
+  }
 
   if (cmd[0][0] === cmdSign) {
     if (cmd[0].length === 1) cmd = cmd.filter((command) => command !== cmd[0]);

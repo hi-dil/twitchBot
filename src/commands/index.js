@@ -52,7 +52,7 @@ const commands = async (channel, tags, message, client) => {
 
   if (command === "remind") SetReminder(client, channel, message, tags);
 
-  if (command === "commands") CommandList(client, channel);
+  // if (command === "commands") CommandList(client, channel);
   if (command === "help") Help(client, channel, message);
   // if (command === 'time') Time(client, channel, message)
   if (command === "chatting") openai(client, channel, message, tags, 10000);
